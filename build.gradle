@@ -1,0 +1,47 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.10.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.adsizzler.mangolaa.kafkaconsumer.aggregations'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.kafka:spring-kafka')
+	compile('org.codehaus.groovy:groovy')
+
+
+	//Jackson
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.4'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.4'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.4'
+
+
+	runtime('org.springframework.boot:spring-boot-devtools')
+	runtime('com.h2database:h2')
+	runtime('mysql:mysql-connector-java')
+
+	//Tests
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
+	testCompile group: 'org.spockframework', name: 'spock-spring', version: '1.1-groovy-2.4'
+
+}
