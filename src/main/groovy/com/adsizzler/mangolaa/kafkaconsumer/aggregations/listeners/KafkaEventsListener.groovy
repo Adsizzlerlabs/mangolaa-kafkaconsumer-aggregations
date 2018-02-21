@@ -70,7 +70,7 @@ class KafkaEventsListener {
                 event = new AggregatedWin(req)
                 break
 
-            case AggregatedImpression :
+            case AGGREGATED_IMPRESSIONS :
                 req = Json.toObject(json, AggregatedImpressionRequest)
                 event = new AggregatedImpression(req)
                 break
