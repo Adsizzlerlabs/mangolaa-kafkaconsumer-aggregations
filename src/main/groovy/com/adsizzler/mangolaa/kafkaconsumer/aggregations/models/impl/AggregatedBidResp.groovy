@@ -8,6 +8,7 @@ import com.adsizzler.mangolaa.kafkaconsumer.aggregations.util.TimeUtil
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Table
+import java.time.ZonedDateTime
 
 /**
  * Created by ankushsharma on 20/02/18.
@@ -21,6 +22,17 @@ class AggregatedBidResp extends AbstractAggregatedEvent {
 
     @Column(name = "creative_id")
     Integer creativeId
+
+    AggregatedBidResp(Map fields){
+        this.timestamp = fields['timestamp'] as ZonedDateTime
+        this.advId = fields['advId'] as Integer
+        this.campaignId = fields['campaignId'] as Integer
+        this.creativeId = fields['creativeId'] as Integer
+        this.sourceId = fields['sourceId'] as Integer
+        this.clientId = fields['clientId'] as Integer
+        this.count = fields['count'] as Integer
+        this.createdOn = fields['timestamp'] as ZonedDateTime
+    }
 
     AggregatedBidResp(AggregatedBidRespRequest req){
         Assert.notNull(req, 'req cannot be null')

@@ -1,7 +1,7 @@
 package com.adsizzler.mangolaa.kafkaconsumer.aggregations.repository
 
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.BaseSpockSpec
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedBidReq
+import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedBidResp
 import org.springframework.beans.factory.annotation.Autowired
 
 import java.time.ZonedDateTime
@@ -9,33 +9,40 @@ import java.time.ZonedDateTime
 /**
  * Created by ankushsharma on 21/02/18.
  */
-class AggregatedBidReqRepositorySpec extends BaseSpockSpec {
+class AggregatedBidRespRepositorySpec extends BaseSpockSpec {
 
     @Autowired
-    AggregatedBidReqRepository repository
+    AggregatedBidRespRepository repository
 
-    def "save instance of AggegatedBidReq to db"(){
-        given :
+    def "save instance of AggegatedBidResp to db"() {
+
+        given:
             def now = ZonedDateTime.now()
+            def campaignId = 1
+            def creativeId = 1
             def advId = 2
             def clientId = 3
             def count = 10
             def sourceId = 5
-            def aggr = new AggregatedBidReq(
-                    timestamp : now,
-                    advId : advId,
-                    sourceId : sourceId,
-                    clientId : clientId,
-                    count : count,
-                    createdOn : now
+            def aggr = new AggregatedBidResp(
+                    timestamp: now,
+                    campaignId : campaignId,
+                    creativeId : creativeId,
+                    advId: advId,
+                    sourceId: sourceId,
+                    clientId: clientId,
+                    count: count,
+                    createdOn: now
             )
 
-        when :
+        when:
             def result = repository.save(aggr)
 
-        then :
+        then:
             result.with {
                 advId == advId
+                campaignId == campaignId
+                creativeId == creativeId
                 sourceId == sourceId
                 clientId == clientId
                 count == count
@@ -47,4 +54,5 @@ class AggregatedBidReqRepositorySpec extends BaseSpockSpec {
     def cleanup(){
         repository.deleteAll()
     }
+
 }

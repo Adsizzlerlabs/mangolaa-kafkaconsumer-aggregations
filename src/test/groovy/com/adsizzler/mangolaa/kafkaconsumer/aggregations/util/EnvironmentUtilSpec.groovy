@@ -1,7 +1,6 @@
 package com.adsizzler.mangolaa.kafkaconsumer.aggregations.util
 
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.BaseSpockSpec
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.env.Environment
 
@@ -19,8 +18,5 @@ class EnvironmentUtilSpec extends BaseSpockSpec {
 
         then :
             result.find() == 'dev'
-
     }
-
-
 }

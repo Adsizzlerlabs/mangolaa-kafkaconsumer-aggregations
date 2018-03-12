@@ -12,6 +12,7 @@ import java.time.ZonedDateTime
 class ZonedDateTimeConverterSpec extends BaseSpockSpec {
 
     def "ZonedDateTime -> sql.Timestamp conv test"(){
+
         given :
             def now = ZonedDateTime.now() // Zone doesn't matter
 
@@ -23,6 +24,7 @@ class ZonedDateTimeConverterSpec extends BaseSpockSpec {
     }
 
     def "sql.Timestamp -> ZonedDateTime conv test"(){
+
         given :
             def now = ZonedDateTime.now(ZoneId.of("UTC"))
             def timestamp = Timestamp.valueOf(now.toLocalDateTime())
@@ -32,6 +34,7 @@ class ZonedDateTimeConverterSpec extends BaseSpockSpec {
 
         then :
             zonedDateTime == now
+
     }
 
 }

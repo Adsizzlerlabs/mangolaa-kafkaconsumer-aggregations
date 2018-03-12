@@ -3,10 +3,12 @@ package com.adsizzler.mangolaa.kafkaconsumer.aggregations.listeners
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.AbstractAggregatedEvent
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedBidReq
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedBidResp
+import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedClick
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedImpression
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedWin
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedBidReqJsonRequest
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedBidRespRequest
+import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedClickRequest
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedImpressionRequest
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedWinRequest
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.service.AggregatedEventsService
@@ -29,7 +31,7 @@ class KafkaEventsListener {
 
     private final AggregatedEventsService aggregatedEventsService
 
-    KafkaEventsListener(AggregatedEventsService aggregatedEventsService){
+    KafkaEventsListener(AggregatedEventsService aggregatedEventsService) {
         this.aggregatedEventsService = aggregatedEventsService
     }
 
@@ -38,12 +40,12 @@ class KafkaEventsListener {
             AGGREGATED_BID_RESP,
             AGGREGATED_WINS,
             AGGREGATED_IMPRESSIONS,
+            AGGREGATED_CLICKS
     ])
-    void stream(
+    void saveAggregatedEvents(
         @Payload byte[] payload,
         @Header(KafkaHeaders.TOPIC) String topic,
         @Header(KafkaHeaders.OFFSET) long offset
-
     )
     {
         log.debug 'Kafka Topic {}', topic
@@ -54,7 +56,9 @@ class KafkaEventsListener {
 
         AbstractAggregatedEvent event
         def req
+
         switch(topic){
+
             case AGGREGATED_BID_REQ :
                 req = Json.toObject(json, AggregatedBidReqJsonRequest)
                 event = new AggregatedBidReq(req)
@@ -75,11 +79,16 @@ class KafkaEventsListener {
                 event = new AggregatedImpression(req)
                 break
 
+            case AGGREGATED_CLICKS :
+                req = Json.toObject(json, AggregatedClickRequest)
+                event = new AggregatedClick(req)
+                break
+
             default :
                 log.warn 'This should not happen. Topic {}', topic
         }
+
         log.debug 'Aggregated Event {}', event
         aggregatedEventsService.save(event)
-
     }
 }
