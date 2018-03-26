@@ -1,7 +1,6 @@
 package com.adsizzler.mangolaa.kafkaconsumer.aggregations.repository
 
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.BaseSpockSpec
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedBidResp
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedImpression
 import org.springframework.beans.factory.annotation.Autowired
 

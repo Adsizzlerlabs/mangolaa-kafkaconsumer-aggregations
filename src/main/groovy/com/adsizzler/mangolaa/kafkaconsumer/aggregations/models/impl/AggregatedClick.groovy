@@ -2,10 +2,8 @@ package com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl
 
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.AbstractAggregatedEvent
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedClickRequest
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedWinRequest
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.util.Assert
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.util.TimeUtil
-import com.fasterxml.jackson.annotation.JsonProperty
 
 import javax.persistence.Column
 import javax.persistence.Entity

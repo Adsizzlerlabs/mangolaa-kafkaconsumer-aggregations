@@ -1,16 +1,8 @@
 package com.adsizzler.mangolaa.kafkaconsumer.aggregations.service.impl
 
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.AbstractAggregatedEvent
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedBidReq
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedBidResp
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedClick
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedImpression
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedWin
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.repository.AggregatedBidReqRepository
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.repository.AggregatedBidRespRepository
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.repository.AggregatedClickRepository
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.repository.AggregatedImpressionRepository
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.repository.AggregatedWinRepository
+import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.*
+import com.adsizzler.mangolaa.kafkaconsumer.aggregations.repository.*
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.service.AggregatedEventsService
 import groovy.util.logging.Slf4j
 import org.springframework.stereotype.Service
@@ -28,13 +20,17 @@ class AggregatedEventsServiceImpl implements AggregatedEventsService {
     private final AggregatedWinRepository aggregatedWinRepository
     private final AggregatedImpressionRepository aggregatedImpressionRepository
     private final AggregatedClickRepository aggregatedClickRepository
+    private final AggregatedConversionRepository aggregatedConversionRepository
+    private final AggregatedPostbackRepository aggregatedPostbackRepository
 
     AggregatedEventsServiceImpl(
             AggregatedBidReqRepository aggregatedBidReqRepository,
             AggregatedBidRespRepository aggregatedBidRespRepository,
             AggregatedWinRepository aggregatedWinRepository,
             AggregatedImpressionRepository aggregatedImpressionRepository,
-            AggregatedClickRepository aggregatedClickRepository
+            AggregatedClickRepository aggregatedClickRepository,
+            AggregatedConversionRepository aggregatedConversionRepository,
+            AggregatedPostbackRepository aggregatedPostbackRepository
     )
     {
         this.aggregatedBidReqRepository = aggregatedBidReqRepository
@@ -42,6 +38,9 @@ class AggregatedEventsServiceImpl implements AggregatedEventsService {
         this.aggregatedWinRepository = aggregatedWinRepository
         this.aggregatedImpressionRepository = aggregatedImpressionRepository
         this.aggregatedClickRepository = aggregatedClickRepository
+        this.aggregatedConversionRepository = aggregatedConversionRepository
+        this.aggregatedPostbackRepository = aggregatedPostbackRepository
+
     }
 
     @Override
@@ -68,6 +67,14 @@ class AggregatedEventsServiceImpl implements AggregatedEventsService {
 
             case AggregatedClick :
                 aggregatedClickRepository.save(event)
+                break
+
+            case AggregatedConversion :
+                aggregatedConversionRepository.save(event)
+                break
+
+            case AggregatedPostback :
+                aggregatedPostbackRepository.save(event)
                 break
 
             default :

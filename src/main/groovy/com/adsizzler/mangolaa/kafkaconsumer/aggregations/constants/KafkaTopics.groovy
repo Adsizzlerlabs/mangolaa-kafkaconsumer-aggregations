@@ -10,5 +10,7 @@ class KafkaTopics {
     static final String AGGREGATED_WINS = "aggregated_wins"
     static final String AGGREGATED_IMPRESSIONS = "aggregated_impressions"
     static final String AGGREGATED_CLICKS = "aggregated_clicks"
+    static final String AGGREGATED_POSTBACKS = "aggregated_postbacks"
+    static final String AGGREGATED_CONVERSIONS = "aggregated_conversions"
 
 }

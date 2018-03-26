@@ -1,16 +1,8 @@
 package com.adsizzler.mangolaa.kafkaconsumer.aggregations.listeners
 
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.AbstractAggregatedEvent
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedBidReq
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedBidResp
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedClick
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedImpression
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.AggregatedWin
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedBidReqJsonRequest
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedBidRespRequest
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedClickRequest
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedImpressionRequest
-import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedWinRequest
+import com.adsizzler.mangolaa.kafkaconsumer.aggregations.models.impl.*
+import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.*
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.service.AggregatedEventsService
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.util.Json
 import groovy.util.logging.Slf4j
@@ -40,7 +32,9 @@ class KafkaEventsListener {
             AGGREGATED_BID_RESP,
             AGGREGATED_WINS,
             AGGREGATED_IMPRESSIONS,
-            AGGREGATED_CLICKS
+            AGGREGATED_CLICKS,
+            AGGREGATED_CONVERSIONS,
+            AGGREGATED_POSTBACKS
     ])
     void saveAggregatedEvents(
         @Payload byte[] payload,
@@ -82,6 +76,16 @@ class KafkaEventsListener {
             case AGGREGATED_CLICKS :
                 req = Json.toObject(json, AggregatedClickRequest)
                 event = new AggregatedClick(req)
+                break
+
+            case AGGREGATED_CONVERSIONS :
+                req = Json.toObject(json, AggregatedConversionRequest)
+                event = new AggregatedConversion(req)
+                break
+
+            case AGGREGATED_POSTBACKS :
+                req = Json.toObject(json, AggregatedPostbackRequest)
+                event = new AggregatedPostback(req)
                 break
 
             default :
