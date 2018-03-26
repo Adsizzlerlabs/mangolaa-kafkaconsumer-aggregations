@@ -31,6 +31,25 @@ class AggregatedClickRequest {
     @JsonProperty(value = "count", required = true)
     final Integer count
 
+    @JsonProperty(value = "eventCode", required = true)
+    final Integer eventCode
+
+    @JsonProperty(value = "city", required = true)
+    final String city
+
+    @JsonProperty(value = "country", required = true)
+    final String country
+
+    @JsonProperty(value = "province", required = true)
+    final String province
+
+    @JsonProperty(value = "platform", required = true)
+    final String platform
+
+    @JsonProperty(value = "carrier", required = true)
+    final String carrier
+
+
     @JsonProperty(value = "timestamp", required = true)
     @JsonDeserialize(using = ZonedDateTimeDeserializer)
     final ZonedDateTime timestamp

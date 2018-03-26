@@ -5,6 +5,7 @@ import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedClick
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.request.AggregatedWinRequest
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.util.Assert
 import com.adsizzler.mangolaa.kafkaconsumer.aggregations.util.TimeUtil
+import com.fasterxml.jackson.annotation.JsonProperty
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -24,6 +25,24 @@ class AggregatedClick extends  AbstractAggregatedEvent {
     @Column(name = "creative_id")
     Integer creativeId
 
+    @Column(name = 'event_code')
+    Integer eventCode
+
+    @Column(name = "city")
+    String city
+
+    @Column(name = "country")
+    String country
+
+    @Column(name = "province")
+    String province
+
+    @Column(name = "platform")
+    String platform
+
+    @Column(name = "carrier")
+    String carrier
+
     AggregatedClick(Map fields){
         this.timestamp = fields['timestamp'] as ZonedDateTime
         this.advId = fields['advId'] as Integer
@@ -33,6 +52,12 @@ class AggregatedClick extends  AbstractAggregatedEvent {
         this.clientId = fields['clientId'] as Integer
         this.count = fields['count'] as Integer
         this.createdOn = fields['timestamp'] as ZonedDateTime
+        this.eventCode = fields['eventCode'] as Integer
+        this.city = fields['city'] as String
+        this.country = fields['country'] as String
+        this.province = fields['province'] as String
+        this.platform = fields['platform'] as String
+        this.carrier = fields['carrier'] as String
     }
 
     AggregatedClick(AggregatedClickRequest req){
@@ -45,6 +70,12 @@ class AggregatedClick extends  AbstractAggregatedEvent {
         this.createdOn = TimeUtil.nowAsUtc()
         this.campaignId = req.campaignId
         this.creativeId = req.creativeId
+        this.eventCode = req.eventCode
+        this.city = req.city
+        this.country = req.country
+        this.province = req.province
+        this.platform = req.platform
+        this.carrier = req.carrier
     }
 
 }
